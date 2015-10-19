@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 # Grab LAN subnet for Puppet to use when building firewall rules
-#echo "grabbin teh lan subnet"
-#echo "FACTER_lansubnet=$(ip route | sed -n '2p' | awk '{print $1}')" >> /etc/environment
-puppet module install puppetlabs-firewall
+FACTER_LAN_SUBNET=$(ip route | sed -n '2p' | awk '{print $1}')
+export FACTER_LAN_SUBNET
 
 # cat > /etc/iptables.rules << EOL
 # ########################################################################

@@ -18,7 +18,7 @@ class client_fw::pre {
     destination => '127.0.0.1/8',
     action      => 'reject',
   }->
-  firewallchain { 'FW_eth0_INPUT:filter:IPv4':
+  firewallchain { 'FW_eth0_INPUT':
     ensure  => 'present',
   }->
   firewall { '003 forward to FW_eth0_INPUT':
@@ -26,7 +26,7 @@ class client_fw::pre {
     iniface => 'eth0',
     jump    => 'FW_eth0_INPUT',
   }->
-  firewallchain { 'FW_tun0_INPUT:filter:IPv4':
+  firewallchain { 'FW_tun0_INPUT':
     ensure => 'present',
   }-> 
   firewall { '004 forward to FW_tun0_INPUT':
