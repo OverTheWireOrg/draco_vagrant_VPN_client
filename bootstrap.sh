@@ -20,7 +20,21 @@ EOL
 chmod +x /etc/network/if-post-down.d/iptablessave
 
 # add iptables rules
+
 LAN_SUBNET=$(ip route | sed -n '2p' | awk '{print $1}')
+echo "LAN_SUBNET: $LAN_SUBNET"
+if [ ! -z "$LAN_SUBNET" ]; then 
+    if [[ "$LAN_SUBNET" =~ ([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]\.[[:digit:]]{1,3}/[[:digit:]]{1,2}) ]]; then
+        echo "$LAN_SUBNET"
+        echo "It looks like an IP address, boss."
+    else
+        echo "ERROR: Could not find an IP address in a.b.c.d/mask format."
+    fi
+else
+    echo "ERROR: LAN_SUBNET variable not set."
+fi
+
+
 
 cat > /etc/iptables.rules << EOL
 ########################################################################
